@@ -11,8 +11,8 @@ import { Routes, Route, Link, BrowserRouter as Router} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 
 /* firebase */
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 /* components */
 
@@ -22,12 +22,14 @@ import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 
 import { ToastContainer } from 'react-toastify';
-import { Context } from './Context/Context';
+import { Context } from "./Context/Context";
 import Footer from './Layout/Footer';
 import Header from "./Layout/Header";
+import fireBaseConfig  from "./Config/FirebaseConfig"
 
 
-
+//  init firebase for intilizse firebase fro app
+firebase.initializeApp(fireBaseConfig);
 
 
 

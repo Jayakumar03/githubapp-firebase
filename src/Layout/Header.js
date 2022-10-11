@@ -15,36 +15,55 @@ import {
 
   import{Link} from "react-router-dom";
 
-  import { Context } from "../Context/Context";
+  import  {Context}  from "../Context/Context";
 
   const Header = () => {
 
+    const userContext = useContext( Context)
+
+    const [isOpen, setIsOpen]= useState(false)
+
+    // method for toogle
+    const toggle = () => setIsOpen(!isOpen)     /* error in this line */
+
     return(
 
-        <Navbar className="bg-info" color="info" light expand="md">
+        <Navbar  color="info" light expand="md">
             <NavbarBrand><Link to="/" className ="text-white"> GitFire App</Link></NavbarBrand>
-            <NavbarToggler></NavbarToggler>
-            <Collapse navbar>
+            <NavbarText className="text-white">
+                {
+                 userContext &&  userContext.user?.email ? userContext.user.email: ""
+                }
+                </NavbarText>
+            <NavbarToggler onClick={toggle}>
+            <Collapse isOpen={isOpen} navbar>
             <Nav className="ms-auto" navbar>
-               <NavItem>
-               <NavLink tag={Link} to="/" className='text-white'>
-                    Signup
-                </NavLink>
-               </NavItem>
-               <NavItem>
-               <NavLink tag={Link} to="/" className='text-white'>
-                    Signin
-                </NavLink>
-               </NavItem>
-               <NavItem>
-                <NavLink tag={Link} to="/" className='text-white'>
+                { 
+                  userContext && userContext.user ? (
+                   
+                    <NavItem>
+                <NavLink onClick={ () => {
+                    userContext.setUser(null)
+                } } className='text-white'>
                     Logout
                 </NavLink>
                </NavItem>
-
-            </Nav>
+                   ) : (
+                    <>
+                    <NavLink tag={Link} to="/signup" className='text-white'>
+                            Signup
+                      </NavLink>
+                     <NavLink tag={Link} to="/signin" className='text-white'>
+                     Signin
+                       </NavLink>
             
+                  </>
+                   )
+                }
+               
+            </Nav>
             </Collapse>
+            </NavbarToggler>
         </Navbar>
 
     )
